@@ -8,6 +8,7 @@ const notesList = document.querySelector("#notes-list");
 const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 const characterCount = document.querySelector("#character-count");
+const searchInput = document.querySelector("#search-input");
 
 let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
 
@@ -39,7 +40,13 @@ function deleteNote(id) {
 function render() {
   notesList.textContent = "";
 
-  notes.forEach((note) => {
+  const searchTerm = searchInput.value.trim().toLowerCase();
+
+  const filteredNotes = notes.filter((note) =>
+    note.text.toLowerCase().includes(searchTerm),
+  );
+
+  filteredNotes.forEach((note) => {
     const category = CATEGORIES.includes(note.category)
       ? note.category
       : "Personal";
@@ -77,6 +84,8 @@ function render() {
 }
 
 noteInput.addEventListener("input", updateCharacterCount);
+
+searchInput.addEventListener("input", render);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
