@@ -10,6 +10,7 @@ const errorMessage = document.querySelector("#error-message");
 const characterCount = document.querySelector("#character-count");
 const searchInput = document.querySelector("#search-input");
 const categoryFilter = document.querySelector("#category-filter");
+const sortSelect = document.querySelector("#sort-select");
 const clearAllBtn = document.querySelector("#clear-all-btn");
 
 let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
@@ -38,6 +39,7 @@ function deleteNote(id) {
   saveNotes();
   render();
 }
+
 function editNote(id) {
   const note = notes.find((note) => note.id === id);
 
@@ -68,13 +70,15 @@ function editNote(id) {
   saveNotes();
   render();
 }
+
 function render() {
   notesList.textContent = "";
 
   const searchTerm = searchInput.value.trim().toLowerCase();
   const selectedCategory = categoryFilter.value;
+  const selectedSort = sortSelect.value;
 
-  const filteredNotes = notes.filter((note) => {
+  let filteredNotes = notes.filter((note) => {
     const matchesSearch = note.text.toLowerCase().includes(searchTerm);
 
     const matchesCategory =
@@ -82,6 +86,15 @@ function render() {
 
     return matchesSearch && matchesCategory;
   });
+
+  if (selectedSort === "newest") {
+    filteredNotes.sort((a, b) => b.id - a.id);
+  } else if (selectedSort === "oldest") {
+    filteredNotes.sort((a, b) => a.id - b.id);
+  } else if (selectedSort === "az") {
+    filteredNotes.sort((a, b) => a.text.localeCompare(b.text));
+  }
+
   if (filteredNotes.length === 0) {
     const emptyMessage = document.createElement("p");
     emptyMessage.className = "empty-message";
@@ -96,6 +109,7 @@ function render() {
     updateCount();
     return;
   }
+
   filteredNotes.forEach((note) => {
     const category = CATEGORIES.includes(note.category)
       ? note.category
@@ -117,12 +131,14 @@ function render() {
 
     const date = document.createElement("span");
     date.textContent = note.createdAt;
+
     const editBtn = document.createElement("button");
     editBtn.type = "button";
     editBtn.className = "edit-btn";
     editBtn.textContent = "Edit";
 
     editBtn.addEventListener("click", () => editNote(note.id));
+
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.className = "delete-btn";
@@ -143,6 +159,8 @@ noteInput.addEventListener("input", updateCharacterCount);
 searchInput.addEventListener("input", render);
 
 categoryFilter.addEventListener("change", render);
+
+sortSelect.addEventListener("change", render);
 
 clearAllBtn.addEventListener("click", () => {
   if (notes.length === 0) {
