@@ -9,6 +9,7 @@ const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 const characterCount = document.querySelector("#character-count");
 const searchInput = document.querySelector("#search-input");
+const clearAllBtn = document.querySelector("#clear-all-btn");
 
 let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
 
@@ -86,6 +87,20 @@ function render() {
 noteInput.addEventListener("input", updateCharacterCount);
 
 searchInput.addEventListener("input", render);
+
+clearAllBtn.addEventListener("click", () => {
+  if (notes.length === 0) {
+    return;
+  }
+
+  const confirmed = confirm("Are you sure you want to delete all notes?");
+
+  if (confirmed) {
+    notes = [];
+    saveNotes();
+    render();
+  }
+});
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
