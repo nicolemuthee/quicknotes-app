@@ -9,6 +9,7 @@ const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 const characterCount = document.querySelector("#character-count");
 const searchInput = document.querySelector("#search-input");
+const categoryFilter = document.querySelector("#category-filter");
 const clearAllBtn = document.querySelector("#clear-all-btn");
 
 let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
@@ -42,10 +43,16 @@ function render() {
   notesList.textContent = "";
 
   const searchTerm = searchInput.value.trim().toLowerCase();
+  const selectedCategory = categoryFilter.value;
 
-  const filteredNotes = notes.filter((note) =>
-    note.text.toLowerCase().includes(searchTerm),
-  );
+  const filteredNotes = notes.filter((note) => {
+    const matchesSearch = note.text.toLowerCase().includes(searchTerm);
+
+    const matchesCategory =
+      selectedCategory === "All" || note.category === selectedCategory;
+
+    return matchesSearch && matchesCategory;
+  });
 
   filteredNotes.forEach((note) => {
     const category = CATEGORIES.includes(note.category)
@@ -87,6 +94,8 @@ function render() {
 noteInput.addEventListener("input", updateCharacterCount);
 
 searchInput.addEventListener("input", render);
+
+categoryFilter.addEventListener("change", render);
 
 clearAllBtn.addEventListener("click", () => {
   if (notes.length === 0) {
