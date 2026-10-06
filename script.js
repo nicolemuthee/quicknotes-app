@@ -8,7 +8,11 @@ const notesList = document.querySelector("#notes-list");
 const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
 
-let notes = [];
+let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
+
+function saveNotes() {
+  localStorage.setItem("quicknotes", JSON.stringify(notes));
+}
 
 function updateCount() {
   if (notes.length === 0) {
@@ -22,6 +26,7 @@ function updateCount() {
 
 function deleteNote(id) {
   notes = notes.filter((note) => note.id !== id);
+  saveNotes();
   render();
 }
 
@@ -90,6 +95,7 @@ form.addEventListener("submit", (event) => {
   };
 
   notes.push(note);
+  saveNotes();
 
   noteInput.value = "";
 
