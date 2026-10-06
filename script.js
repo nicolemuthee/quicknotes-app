@@ -1,3 +1,4 @@
+const MAX_LENGTH = 200;
 const CATEGORIES = ["Personal", "Work", "Study"];
 
 const form = document.querySelector("#note-form");
@@ -71,6 +72,11 @@ form.addEventListener("submit", (event) => {
 
   if (text === "") {
     errorMessage.textContent = "Please type a note first.";
+    return;
+  }
+
+  if (text.length > MAX_LENGTH) {
+    errorMessage.textContent = "Notes must be 200 characters or fewer.";
     return;
   }
 
