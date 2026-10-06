@@ -53,7 +53,20 @@ function render() {
 
     return matchesSearch && matchesCategory;
   });
+  if (filteredNotes.length === 0) {
+    const emptyMessage = document.createElement("p");
+    emptyMessage.className = "empty-message";
 
+    if (notes.length === 0) {
+      emptyMessage.textContent = "No notes yet. Add your first note!";
+    } else {
+      emptyMessage.textContent = "No notes match your search or filter.";
+    }
+
+    notesList.append(emptyMessage);
+    updateCount();
+    return;
+  }
   filteredNotes.forEach((note) => {
     const category = CATEGORIES.includes(note.category)
       ? note.category
