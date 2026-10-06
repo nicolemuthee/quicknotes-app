@@ -38,7 +38,36 @@ function deleteNote(id) {
   saveNotes();
   render();
 }
+function editNote(id) {
+  const note = notes.find((note) => note.id === id);
 
+  if (!note) {
+    return;
+  }
+
+  const updatedText = prompt("Edit your note:", note.text);
+
+  if (updatedText === null) {
+    return;
+  }
+
+  const text = updatedText.trim();
+
+  if (text === "") {
+    alert("Note cannot be empty.");
+    return;
+  }
+
+  if (text.length > MAX_LENGTH) {
+    alert("Notes must be 200 characters or fewer.");
+    return;
+  }
+
+  note.text = text;
+
+  saveNotes();
+  render();
+}
 function render() {
   notesList.textContent = "";
 
@@ -88,7 +117,12 @@ function render() {
 
     const date = document.createElement("span");
     date.textContent = note.createdAt;
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "edit-btn";
+    editBtn.textContent = "Edit";
 
+    editBtn.addEventListener("click", () => editNote(note.id));
     const deleteBtn = document.createElement("button");
     deleteBtn.type = "button";
     deleteBtn.className = "delete-btn";
@@ -96,7 +130,7 @@ function render() {
 
     deleteBtn.addEventListener("click", () => deleteNote(note.id));
 
-    meta.append(label, date, deleteBtn);
+    meta.append(label, date, editBtn, deleteBtn);
     li.append(text, meta);
     notesList.append(li);
   });
