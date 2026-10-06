@@ -7,6 +7,7 @@ const categorySelect = document.querySelector("#note-category");
 const notesList = document.querySelector("#notes-list");
 const noteCount = document.querySelector("#note-count");
 const errorMessage = document.querySelector("#error-message");
+const characterCount = document.querySelector("#character-count");
 
 let notes = JSON.parse(localStorage.getItem("quicknotes")) || [];
 
@@ -22,6 +23,11 @@ function updateCount() {
   } else {
     noteCount.textContent = "You have " + notes.length + " notes.";
   }
+}
+
+function updateCharacterCount() {
+  characterCount.textContent =
+    noteInput.value.length + " / " + MAX_LENGTH + " characters";
 }
 
 function deleteNote(id) {
@@ -70,6 +76,8 @@ function render() {
   updateCount();
 }
 
+noteInput.addEventListener("input", updateCharacterCount);
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -98,8 +106,10 @@ form.addEventListener("submit", (event) => {
   saveNotes();
 
   noteInput.value = "";
+  updateCharacterCount();
 
   render();
 });
 
 render();
+updateCharacterCount();
