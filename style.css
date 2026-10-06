@@ -1,0 +1,195 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+  background: #eef1f4;
+  color: #1f2933;
+  line-height: 1.5;
+}
+
+header {
+  background: #0f766e;
+  color: #ffffff;
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header p {
+  margin: 0.25rem 0 0;
+}
+
+main {
+  max-width: 700px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+section {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+section h2 {
+  margin-top: 0;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #52606d;
+  font-size: 0.9rem;
+}
+
+/* Form */
+#note-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+#note-form label {
+  position: absolute;
+  left: -9999px;
+}
+
+#note-form input[type="text"] {
+  flex: 1;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 6px;
+}
+
+button {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+button:hover {
+  background: #0b5a54;
+}
+
+#error-message {
+  color: #c62828;
+  min-height: 1.5em;
+  margin: 0.5rem 0 0;
+}
+
+/* Notes section */
+#search-input {
+  width: 100%;
+}
+
+#note-count {
+  color: #52606d;
+  margin: 0.75rem 0;
+}
+
+#notes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.note-card {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid #e4e7eb;
+  border-left-width: 6px;
+  border-radius: 8px;
+  background: #fafbfc;
+}
+
+.note-text {
+  margin: 0 0 0.5rem;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+.note-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #52606d;
+}
+
+.category-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+.delete-btn {
+  margin-left: auto;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  background: #c62828;
+  border-color: #c62828;
+}
+
+.delete-btn:hover {
+  background: #9b1c1c;
+}
+
+/* Category styles */
+.category-personal {
+  border-left-color: #0d9488;
+}
+
+.category-personal .category-label {
+  color: #0d9488;
+}
+
+.category-work {
+  border-left-color: #8b1a1a;
+}
+
+.category-work .category-label {
+  color: #8b1a1a;
+}
+
+.category-study {
+  border-left-color: #2563eb;
+}
+
+.category-study .category-label {
+  color: #2563eb;
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+  #note-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  main {
+    margin-top: 1rem;
+  }
+}
